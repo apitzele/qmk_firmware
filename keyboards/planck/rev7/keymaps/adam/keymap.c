@@ -27,39 +27,39 @@ enum planck_keycodes { COLEMAK = SAFE_RANGE, QWERTY };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Colemak DH
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  | Esc  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Bksp |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Del   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | Ctrl | Alt  | GUI  |Lower |Space |Enter |Raise | Left |  Up  |Down  |Right |
- * `-----------------------------------------------------------------------------------'
+ * ,----------------------------------------------------------------------------------------.
+ * | Tab       |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  | Esc  |
+ * |------+--------+------+------+------+------+------+------+------+------+------+---------|
+ * | Bksp      |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '   |
+ * |------+--------+------+------+------+------+------+------+------+------+------+---------|
+ * | Shift     |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Del   |
+ * |------+--------+------+------+------+------+------+------+------+------+------+---------|
+ * | Caps-Word | Ctrl | Alt  | GUI  |Lower |Space |Enter |Raise | Left |  Up  |Down  |Right |
+ * `----------------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_ESC,
-    KC_BSPC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
-    KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
+    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,              KC_J,              KC_L,  KC_U,     KC_Y,   KC_SCLN,  KC_ESC,
+    KC_BSPC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,              KC_M,              KC_N,  KC_E,     KC_I,   KC_O,     KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,              KC_K,              KC_H,  KC_COMM,  KC_DOT, KC_SLSH,  KC_DEL,
+    CW_TOGG, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   LT(LOWER, KC_SPC), LT(LOWER, KC_ENT), RAISE, KC_LEFT,  KC_UP,   KC_DOWN, KC_RGHT
 ),
 
 /* Qwerty
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Esc  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Bksp |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | Ctrl | Alt  | GUI  |Lower |Space |Enter |Raise | Left |  Up  |Down  |Right |
- * `-----------------------------------------------------------------------------------'
+ * ,----------------------------------------------------------------------------------------.
+ * | Tab       |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Esc  |
+ * |------+------+------+------+------+------+------+------+------+------+------+-----------|
+ * | Bksp      |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |------+------+------+------+------+------+------+------+------+------+------+-----------|
+ * | Shift     |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+-----------|
+ * | Caps-Word | Ctrl | Alt  | GUI  |Lower |Space |Enter |Raise | Left |  Up  |Down  |Right |
+ * `----------------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_ESC,
-    KC_BSPC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_BSPC,  KC_A,    KC_S,   KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
-    KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
+    CW_TOGG, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
 ),
 
 /* Lower
