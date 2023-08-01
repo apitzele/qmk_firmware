@@ -89,14 +89,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |----+--------+------+------+------+------+------+------+------+------+------+---------|
  * | Shift   |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Del  |
  * |----+--------+------+------+------+------+------+------+------+------+------+---------|
- * | Lower   |Ctrl* | Win* | Alt* |Ctrl* |    Space    |Raise*|Left* |  Up  | Down |Right*|
+ * | Lower   |Ctrl* | Win* | Alt* |Ctrl* |   *Space*   |Raise*|Left* |  Up  | Down |Right*|
  * `--------------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_mit(
-    KC_TAB,  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     KC_J,     KC_L,              KC_U,             KC_Y,   KC_SCLN, KC_ESC,
+    KC_TAB,  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,     KC_J,     KC_L,              KC_U,             KC_Y,   KC_SCLN, LT(LOWER, KC_ESC),
     KC_BSPC, KC_A,     KC_R,     KC_S,     KC_T,     KC_G,     KC_M,     KC_N,              KC_E,             KC_I,   KC_O,    KC_QUOT,
     KC_LSFT, KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_K,     KC_H,              KC_COMM,          KC_DOT, KC_SLSH, KC_DEL,
-    LOWER,   TD(TD_Z), TD(TD_X), TD(TD_C), TD(TD_V), LT(LOWER, KC_SPC),  LT(RAISE, KC_ENT), TD(TD_LEFT_HOME), KC_UP,  KC_DOWN, TD(TD_RIGHT_END)
+    CW_TOGG, TD(TD_Z), TD(TD_X), TD(TD_C), TD(TD_V), LT(LOWER, KC_SPC),  LT(RAISE, KC_ENT), TD(TD_LEFT_HOME), KC_UP,  KC_DOWN, TD(TD_RIGHT_END)
 ),
 
 /* Qwerty
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+---------|
  * | Shift   |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Del  |
  * |------+------+------+------+------+------+------+------+------+------+------+---------|
- * | Lower   | Ctrl |  Win |  Alt | Ctrl |    Space    |Raise | Left |  Up  | Down |Right |
+ * | Lower   |Ctrl* | Win* | Alt* |Ctrl* |   *Space*   |Raise*|Left* |  Up  | Down |Right*|
  * `--------------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_mit(
