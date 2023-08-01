@@ -43,3 +43,4 @@
 // #define MIDI_ADVANCED
 
 #define AUTO_SHIFT_TIMEOUT 200
+#define TAPPING_TERM 200
