@@ -16,9 +16,9 @@
 
 #include QMK_KEYBOARD_H
 
-enum planck_layers { _COLEMAK, _QWERTY, _LOWER, _RAISE, _ADJUST };
+enum planck_layers { _COLEMAK, _LOWER, _RAISE, _ADJUST };
 
-enum planck_keycodes { COLEMAK = SAFE_RANGE, QWERTY };
+enum planck_keycodes { COLEMAK = SAFE_RANGE };
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -122,24 +122,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, LCTL(KC_Z), TD(TD_X_WIN), TD(TD_C_ALT), TD(TD_V_CTRL), LT(LOWER, KC_SPC), LT(RAISE, KC_ENT), CW_TOGG, _______, _______, _______
 ),
 
-/* Qwerty
- * ,---------------------------------------------------------------------------------------.
- * | Tab      |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Esc  |
- * |------+-------+------+------+------+------+------+------+------+------+------+---------|
- * | Bksp     |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
- * |------+-------+------+------+------+------+------+------+------+------+------+---------|
- * | Shift    |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Del  |
- * |------+-------+------+------+------+------+------+------+------+------+------+---------|
- * | Capsword |Ctrl* | Win* | Alt* |Ctrl* |   *Space*   |Raise*|Left* |  Up  | Down |Right*|
- * `---------------------------------------------------------------------------------------'
- */
-[_QWERTY] = LAYOUT_planck_mit(
-    KC_TAB,  KC_Q,          KC_W,         KC_E,         KC_R,          KC_T,     KC_Y,    KC_U,              KC_I,             KC_O,   KC_P,    KC_ESC,
-    KC_BSPC, KC_A,          KC_S,         KC_D,         KC_F,          KC_G,     KC_H,    KC_J,              KC_K,             KC_L,   KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,          KC_X,         KC_C,         KC_V,          KC_B,     KC_N,    KC_M,              KC_COMM,          KC_DOT, KC_SLSH, KC_DEL,
-    CW_TOGG, TD(TD_Z_CTRL), TD(TD_X_WIN), TD(TD_C_ALT), TD(TD_V_CTRL), LT(LOWER, KC_SPC), LT(RAISE, KC_ENT), TD(TD_LEFT_HOME), KC_UP,  KC_DOWN, TD(TD_RIGHT_END)
-),
-
 /* Lower
  * ,-------------------------------------------------------------------------------------.
  * |      |   !  |   @  |   #  |   $   |  %   |   ^  |   &  |   *   |   `  |   ~  |  |   |
@@ -185,14 +167,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |Colemk|Qwerty|
+ * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_mit(
     QK_BOOTLOADER, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,
     _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______,       _______, _______, _______, _______, _______         ,  _______, _______, _______, COLEMAK, QWERTY
+    _______,       _______, _______, _______, _______, _______         ,  _______, _______, _______, _______, _______
 )
 
 };
@@ -267,19 +249,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(tap_hold->tap);
             }
             return true;
-            break;
-        case QWERTY:
-            if (record->event.pressed) {
-                print("mode just switched to qwerty and this is a huge string\n");
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-            break;
-        case COLEMAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK);
-            }
-            return false;
             break;
     }
     return true;
