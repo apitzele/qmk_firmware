@@ -26,12 +26,7 @@ enum planck_keycodes { COLEMAK = SAFE_RANGE };
 //Tap Dance
 enum {
   TD_LEFT_HOME,
-  TD_LEFT,
-  TD_RIGHT_END,
-  TD_Z_CTRL,
-  TD_X_WIN,
-  TD_C_ALT,
-  TD_V_CTRL
+  TD_RIGHT_END
 };
 
 typedef struct {
@@ -88,17 +83,33 @@ void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void tap_dance_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) {
+    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
+
+    if (state->pressed) {
+        if (state->count == 2
+#ifndef PERMISSIVE_HOLD
+            && !state->interrupted
+#endif
+        ) {
+            register_code16(tap_hold->hold);
+            tap_hold->held = tap_hold->hold;
+        } else {
+            register_code16(tap_hold->tap);
+            tap_hold->held = tap_hold->tap;
+        }
+    }
+}
+
 #define ACTION_TAP_DANCE_TAP_HOLD(tap, hold) \
     { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
 
+#define ACTION_TAP_DANCE_TAP_AND_HOLD(tap, hold) \
+{ .fn = {NULL, tap_dance_tap_and_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
+
 tap_dance_action_t tap_dance_actions[] = {
-  [TD_LEFT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
-  [TD_RIGHT_END] = ACTION_TAP_DANCE_DOUBLE(KC_RIGHT, KC_END),
-  [TD_Z_CTRL] = ACTION_TAP_DANCE_TAP_HOLD(LCTL(KC_Z), KC_LCTL),
-  [TD_X_WIN] = ACTION_TAP_DANCE_TAP_HOLD(LCTL(KC_X), KC_LGUI),
-  [TD_C_ALT] = ACTION_TAP_DANCE_TAP_HOLD(LCTL(KC_C), KC_LALT),
-  [TD_V_CTRL] = ACTION_TAP_DANCE_TAP_HOLD(LCTL(KC_V), KC_LCTL),
-  [TD_LEFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,arrow_left_finished, arrow_left_reset)
+  [TD_LEFT_HOME] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_LEFT, KC_HOME),
+  [TD_RIGHT_END] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_RIGHT, KC_END)
 };
 
 /* clang-format off */
@@ -112,21 +123,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+------+--------+-------+------+--------+-------|
  * | Shift  |   Z  |   X  |   C  |   D  |   V  |   K  |    H   |   ,   |   .  |   /    | Del   |
  * |--------+------+------+------+------+------+------+--------+-------+------+--------+-------|
- * |        |CtrlZ | Win* | Alt* |Ctrl* |   *Space*   | Raise* |Capswrd|      |        |       |
+ * |        |      |      | Alt  | Ctrl |    Space*   | Raise* |  Win  |      |        |       |
  * `-------------------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_mit(
-    KC_TAB,  KC_Q,       KC_W,         KC_F,         KC_P,          KC_B,     KC_J,    KC_L,              KC_U,    KC_Y,    KC_SCLN, KC_ESC,
-    KC_BSPC, KC_A,       KC_R,         KC_S,         KC_T,          KC_G,     KC_M,    KC_N,              KC_E,    KC_I,    KC_O,    KC_QUOT,
-    KC_LSFT, KC_Z,       KC_X,         KC_C,         KC_D,          KC_V,     KC_K,    KC_H,              KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
-    _______, LCTL(KC_Z), TD(TD_X_WIN), TD(TD_C_ALT), TD(TD_V_CTRL), LT(LOWER, KC_SPC), LT(RAISE, KC_ENT), CW_TOGG, _______, _______, _______
+    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,     KC_J,    KC_L,              KC_U,    KC_Y,    KC_SCLN, KC_ESC,
+    KC_BSPC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,     KC_M,    KC_N,              KC_E,    KC_I,    KC_O,    KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,     KC_K,    KC_H,              KC_COMM, KC_DOT,  KC_SLSH, KC_DEL,
+    _______, _______, KC_LGUI, KC_LALT, KC_LCTL, LT(LOWER, KC_SPC), LT(RAISE, KC_ENT), KC_LGUI, _______, _______, _______
 ),
 
 /* Lower
  * ,-------------------------------------------------------------------------------------.
  * |      |   !  |   @  |   #  |   $   |  %   |   ^  |   &  |   *   |   `  |   ~  |  |   |
  * |------+------+------+------+-------+------+------+------+-------+------+------+------|
- * | Bksp |   =  |   +  |   -  |   _   |      |      |  [{  |   }]  |   (  |   )  |  \   |
+ * | Bksp |   =  |   +  |   -  |   _   |      |CapsWd|  [{  |   }]  |   (  |   )  |  \   |
  * |------+------+------+------+------+-------+------+------+-------+------+------+------|
  * |  F5  |  F10 |  F11 |  F12 |CTL-F12|  F8  |      | Left*|  Up  | Down  |Right*| Del  |
  * |------+------+------+------+-------+------+------+------+------+------+-------+------|
@@ -135,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_planck_mit(
     _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,       KC_PERC, KC_CIRC, KC_AMPR,          KC_ASTR, KC_GRV,  KC_TILD,          KC_PIPE,
-    KC_BSPC, KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS,      _______, _______, KC_LBRC,          KC_RBRC, KC_LPRN, KC_RPRN,          KC_BSLS,
+    KC_BSPC, KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS,      _______, CW_TOGG, KC_LBRC,          KC_RBRC, KC_LPRN, KC_RPRN,          KC_BSLS,
     KC_F5,   KC_F10,  KC_F11,  KC_F12,  LCTL(KC_F12), KC_F8,   _______, TD(TD_LEFT_HOME), KC_UP,   KC_DOWN, TD(TD_RIGHT_END), KC_DEL,
     _______, _______, _______, _______, _______,      _______         , _______,          _______, _______, _______,          _______
 ),
@@ -239,10 +250,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     tap_dance_action_t *action;
 
     switch (keycode) { /* register tap hold actions w/ tap dance*/
-        case TD(TD_Z_CTRL):
-        case TD(TD_X_WIN):
-        case TD(TD_C_ALT):
-        case TD(TD_V_CTRL):
+        case TD(TD_LEFT_HOME):
+        case TD(TD_RIGHT_END):
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
