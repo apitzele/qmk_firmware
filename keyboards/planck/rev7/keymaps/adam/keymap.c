@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TD(TD_Q),     TD(TD_W),     TD(TD_F),      KC_P,             KC_B,             _______, _______,    KC_J,             KC_L,         KC_U,         TD(TD_Y),     KC_SCLN,
     LCTL_T(KC_A), LALT_T(KC_R), LT(NAV, KC_S), LSFT_T(KC_T),     KC_G,             _______, _______,    KC_M,             RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O),
     TD(TD_Z),     TD(TD_X),     TD(TD_C),      KC_D,             TD(TD_V),         _______, _______,    KC_K,             KC_H,         KC_COMM,      KC_DOT,       KC_SLSH,
-    _______,      _______,      _______,       LT(NUM, KC_BSPC), LT(SYMR, KC_SPC), _______, _______,    LT(SYML, KC_ENT), TD(TD_TAB),   _______,      _______,      _______
+    _______,      _______,      _______,       LT(NUM, KC_BSPC), LT(SYMR, KC_SPC), _______, _______,    LT(SYML, KC_ENT), KC_DEL,       _______,      _______,      _______
 ),
 /* Raise (Sym L)
  * ,--------------------------------------------------------------------------.
@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, _______,  _______, _______, _______, _______,
     KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL,
     _______, KC_GRV,  KC_BSLS, KC_LBRC, KC_RBRC, _______, _______, _______,  _______, _______, _______, _______,
-    _______, _______, _______, KC_BSPC, KC_SPC,  _______, _______, _______,  _______, _______, _______, _______
+    _______, _______, _______, _______, _______,  _______, _______, _______,  _______, _______, _______, _______
 ),
 /* Lower (Sym R)
  * ,-----------------------------------------------------------------------------.
@@ -116,14 +116,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+-----+-----+------+-----+-----+-----+-----+---------+-----+-----+-----|
  * |      |     |     |      |     |     |     |     |    [    |  ]  |  `  |  \  |
  * |------+-----+-----+------+-----+-----+-----+-----+---------+-----+-----+-----|
- * |      |     |     |      |     |     |     | Del | CapsLck |     |     |     |
+ * |      |     |     |      |     |     |     | Tab | CapsLck |     |     |     |
  * `-----------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
     KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, KC_CIRC,    KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
     KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_PIPE, KC_QUOT,
     _______, KC_GRV,  KC_BSLS, KC_LBRC, KC_RBRC, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_GRV, KC_BSLS,
-    _______, _______, _______, _______, _______, _______, _______, TD(TD_DEL), KC_CAPS, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, KC_TAB,     KC_CAPS, _______, _______, _______
 ),
 /* Nav
  * ,----------------------------------------------------------------------------------.
