@@ -4,8 +4,8 @@
 enum planck_layers { _COLEMAK, _LOWER, _RAISE, _NUM, _NAV, _ADJUST };
 enum planck_keycodes { COLEMAK = SAFE_RANGE };
 
-#define SYML MO(_LOWER)
-#define SYMR MO(_RAISE)
+#define SYMR MO(_LOWER)
+#define SYML MO(_RAISE)
 #define NAV MO(_NAV)
 #define NUM MO(_NUM)
 
