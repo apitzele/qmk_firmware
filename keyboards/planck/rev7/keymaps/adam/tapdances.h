@@ -4,7 +4,7 @@
 { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
 
 #define ACTION_TAP_DANCE_TAP_AND_HOLD(tap, hold) \
-{ .fn = {NULL, tap_dance_tap_and_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
+{ .fn = {NULL, tap_dance_tap_and_hold_finished, tap_dance_tap_and_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
 
 typedef struct {
     uint16_t tap;
@@ -16,11 +16,7 @@ void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
     tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
 
     if (state->pressed) {
-        if (state->count == 1
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
+        if (state->count == 1) {
             register_code16(tap_hold->hold);
             tap_hold->held = tap_hold->hold;
         } else {
@@ -39,29 +35,17 @@ void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void tap_dance_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (state->pressed) {
-        if (state->count == 2
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
-            register_code16(tap_hold->hold);
-            tap_hold->held = tap_hold->hold;
-        } else {
-            register_code16(tap_hold->tap);
-            tap_hold->held = tap_hold->tap;
-        }
-    }
-}
-
 // boilerplate for holds
 typedef struct {
   bool is_press_action;
   int state;
 } tap;
+
+//instanalize an instance of 'tap' for the 'x' tap dance.
+static tap xtap_state = {
+  .is_press_action = true,
+  .state = 0
+};
 
 enum {
   SINGLE_TAP = 1,
@@ -92,8 +76,40 @@ int cur_dance (tap_dance_state_t *state) {
   return 8; //magic number. At some point this method will expand to work for more presses
 }
 
-//instanalize an instance of 'tap' for the 'x' tap dance.
-/*static tap xtap_state = {
-  .is_press_action = true,
-  .state = 0
-};*/
+
+void tap_dance_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) {
+    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
+    xtap_state.state = cur_dance(state);
+    switch (xtap_state.state) {
+       case SINGLE_TAP:
+            register_code16(tap_hold->tap);
+            break;
+       case DOUBLE_HOLD:
+            register_code16(tap_hold->hold);
+	        break;
+   }
+/*
+    if (state->pressed) {
+        if (state->count == 2) {
+            register_code16(tap_hold->hold);
+            tap_hold->held = tap_hold->hold;
+        } else {
+            register_code16(tap_hold->tap);
+            tap_hold->held = tap_hold->tap;
+        }
+    }
+*/
+}
+
+void tap_dance_tap_and_hold_reset(tap_dance_state_t *state, void *user_data) {
+    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
+
+    switch (xtap_state.state) {
+       case SINGLE_TAP:
+            unregister_code16(tap_hold->tap);
+            break;
+       case DOUBLE_HOLD:
+            unregister_code16(tap_hold->hold);
+		break;
+   }
+}

@@ -23,13 +23,9 @@ enum {
   TD_Q,
   TD_W,
   TD_TAB,
-  //TD_DEL,
-  //TD_SLASH
+  TD_DEL,
+  TD_SLASH
 };
-
-
-void del_finished (tap_dance_state_t *state, void *user_data);
-void del_reset (tap_dance_state_t *state, void *user_data);
 
 void slash_finished (tap_dance_state_t *state, void *user_data);
 void slash_reset (tap_dance_state_t *state, void *user_data);
@@ -37,38 +33,50 @@ void slash_reset (tap_dance_state_t *state, void *user_data);
 tap_dance_action_t tap_dance_actions[] = {
   [TD_LEFT_HOME] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_LEFT, KC_HOME),
   [TD_RIGHT_END] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_RIGHT, KC_END),
-  [TD_Z] = ACTION_TAP_DANCE_DOUBLE(KC_Z, LCTL(KC_Z)),
+  [TD_TAB] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_TAB, LSFT(KC_TAB)),
+  [TD_DEL] = ACTION_TAP_DANCE_TAP_AND_HOLD (KC_DEL, RSFT(KC_DEL)),
+  [TD_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, slash_finished, slash_reset),
+  [TD_Z] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_Z, LCTL(KC_Z)),
+  [TD_Y] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_Y, RCTL(KC_Y)),
   [TD_X] = ACTION_TAP_DANCE_TAP_HOLD(KC_X, LCTL(KC_X)),
   [TD_C] = ACTION_TAP_DANCE_TAP_HOLD(KC_C, LCTL(KC_C)),
   [TD_V] = ACTION_TAP_DANCE_TAP_HOLD(KC_V, LCTL(KC_V)),
   [TD_F] = ACTION_TAP_DANCE_TAP_HOLD(KC_F, LCTL(KC_F)),
-  [TD_Y] = ACTION_TAP_DANCE_DOUBLE(KC_Y, LCTL(KC_Y)),
   [TD_W] = ACTION_TAP_DANCE_TAP_HOLD(KC_W, LCTL(KC_A)), // Hold W = Ctrl + A
   [TD_H] = ACTION_TAP_DANCE_TAP_HOLD(KC_H, LCTL(KC_H)),
-  [TD_Q] = ACTION_TAP_DANCE_TAP_HOLD(KC_Q, KC_ESC),
-  [TD_TAB] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_TAB, LSFT(KC_TAB)),
- // [TD_DEL] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, del_finished, del_reset),
- // [TD_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, slash_finished, slash_reset)
+  [TD_Q] = ACTION_TAP_DANCE_TAP_HOLD(KC_Q, KC_ESC)
 };
-/*
-void del_finished (tap_dance_state_t *state, void *user_data) {
+
+void slash_finished (tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
-    case SINGLE_TAP: register_code(KC_DEL); break;
-    case SINGLE_HOLD: register_code(KC_DEL); break;
-    case DOUBLE_HOLD:
+    case SINGLE_TAP: register_code(KC_SLSH); break;
+    case SINGLE_HOLD:
 	    register_code(KC_RSFT);
-   		register_code(KC_DEL);
+   		register_code(KC_SLSH);
+	    break;
+    case DOUBLE_HOLD:
+	    register_code(KC_RCTL);
+   		register_code(KC_SLSH);
 		break;
-    case DOUBLE_SINGLE_TAP: register_code(KC_DEL); unregister_code(KC_DEL); register_code(KC_DEL);
   }
 }
 
-            break;
-    }
-    return true;
+void slash_reset (tap_dance_state_t *state, void *user_data) {
+  switch (xtap_state.state) {
+    case SINGLE_TAP: unregister_code(KC_SLSH); break;
+    case SINGLE_HOLD:
+	    unregister_code(KC_RSFT);
+   		unregister_code(KC_SLSH);
+	    break;
+    case DOUBLE_HOLD:
+        unregister_code(KC_RCTL);
+   		unregister_code(KC_SLSH);
+        break;
+  }
+  xtap_state.state = 0;
 }
-*/
+
 /* clang-format off */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -88,8 +96,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT_planck_grid(
     TD(TD_Q),     TD(TD_W),     TD(TD_F),      KC_P,             KC_B,             _______, _______,    KC_J,             KC_L,         KC_U,         TD(TD_Y),     KC_SCLN,
     LCTL_T(KC_A), LALT_T(KC_R), LT(NAV, KC_S), LSFT_T(KC_T),     KC_G,             _______, _______,    KC_M,             RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O),
-    TD(TD_Z),     TD(TD_X),     TD(TD_C),      KC_D,             TD(TD_V),         _______, _______,    KC_K,             KC_H,         KC_COMM,      KC_DOT,       KC_SLSH,
-    _______,      _______,      _______,       LT(NUM, KC_BSPC), LT(SYMR, KC_SPC), _______, _______,    LT(SYML, KC_ENT), KC_DEL,       _______,      _______,      _______
+    TD(TD_Z),     TD(TD_X),     TD(TD_C),      KC_D,             TD(TD_V),         _______, _______,    KC_K,             KC_H,         KC_COMM,      KC_DOT,       TD(TD_SLASH),
+    _______,      _______,      _______,       LT(NUM, KC_BSPC), LT(SYMR, KC_SPC), _______, _______,    LT(SYML, KC_ENT), TD(TD_DEL),   _______,      _______,      _______
 ),
 /* Raise (Sym L)
  * ,--------------------------------------------------------------------------.
@@ -123,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, KC_CIRC,    KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
     KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_PIPE, KC_QUOT,
     _______, KC_GRV,  KC_BSLS, KC_LBRC, KC_RBRC, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_GRV, KC_BSLS,
-    _______, _______, _______, _______, _______, _______, _______, KC_TAB,     KC_CAPS, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, TD(TD_TAB), KC_CAPS, _______, _______, _______
 ),
 /* Nav
  * ,----------------------------------------------------------------------------------.
@@ -194,9 +202,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	    case TD(TD_H):
         case TD(TD_Q):
 		case TD(TD_W):
-	    case TD(TD_TAB):
-        case TD(TD_LEFT_HOME):
-        case TD(TD_RIGHT_END):
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
