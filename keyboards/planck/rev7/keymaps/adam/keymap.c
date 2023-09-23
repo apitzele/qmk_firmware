@@ -82,12 +82,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Colemak DH
  * ,-------------------------------------------------------------------------------------.
- * | Q/Esc|  W*  |  F*  |   P  |   B    |     |     |   J   |  L   |   U  |  Y*  |   ;   |
+ * | Q/Esc| W/cA |  F*  |   P  |   B    |     |     |   J   |  L   |   U  |  Y*  |   ;   |
  * |------+------+------+------+--------+-----+-----+-------+------+------+------+-------|
  * |   A  |   R  |   S  |   T  |   G    |     |     |   M   |  N   |   E  |   I  |   O   |
  * | Ctrl |  Alt |  Nav | Shft |        |     |     |       | Shft |  Win |  Alt | Ctrl  |
  * |------+------+------+------+--------+-----+-----+-------+------+------+------+-------|
- * |  Z*  |  X*  |  C*  |   D  |   V*   |     |     |   K   |  H   |   ,  |   .  |   /   |
+ * |  Z*  |  X*  |  C*  |   D  |   V*   |     |     |   K   |  H*  |   ,  |   .  |   /   |
  * |------+------+------+------+--------+-----+-----+-------+------+------+------+-------|
  * |      |      |      | Bspc |  Spc   |     |     | Enter | Del  |      |      |       |
  * |      |      |      | Num  |  Sym R |     |     | Sym L |      |      |      |       |
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT_planck_grid(
     TD(TD_Q),     TD(TD_W),     TD(TD_F),      KC_P,             KC_B,             _______, _______,    KC_J,             KC_L,         KC_U,         TD(TD_Y),     KC_SCLN,
     LCTL_T(KC_A), LALT_T(KC_R), LT(NAV, KC_S), LSFT_T(KC_T),     KC_G,             _______, _______,    KC_M,             RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O),
-    TD(TD_Z),     TD(TD_X),     TD(TD_C),      KC_D,             TD(TD_V),         _______, _______,    KC_K,             KC_H,         KC_COMM,      KC_DOT,       TD(TD_SLASH),
+    TD(TD_Z),     TD(TD_X),     TD(TD_C),      KC_D,             TD(TD_V),         _______, _______,    KC_K,             TD(TD_H),     KC_COMM,      KC_DOT,       TD(TD_SLASH),
     _______,      _______,      _______,       LT(NUM, KC_BSPC), LT(SYMR, KC_SPC), _______, _______,    LT(SYML, KC_ENT), TD(TD_DEL),   _______,      _______,      _______
 ),
 /* Raise (Sym L)
@@ -112,25 +112,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_planck_grid(
     KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, _______,  _______, _______, _______, _______,
-    KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL,
-    _______, KC_GRV,  KC_BSLS, KC_LBRC, KC_RBRC, _______, _______, _______,  _______, _______, _______, _______,
+    KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, _______, _______, _______, _______,  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL,
+    _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______,
     _______, _______, _______, KC_BSPC, KC_SPC,  _______, _______, _______,  _______, _______, _______, _______
 ),
 /* Lower (Sym R)
- * ,-----------------------------------------------------------------------------.
- * |      |     |     |      |     |     |     |  ^  |    &    |  *  |  (  |  )  |
- * |------+-----+-----+------+-----+-----+-----+-----+---------+-----+-----+-----|
- * | Ctrl | Alt | Win | Shft |     |     |     |     |    {    |  }  |  |  |  '  |
- * |------+-----+-----+------+-----+-----+-----+-----+---------+-----+-----+-----|
- * |      |     |     |      |     |     |     |     |    [    |  ]  |  `  |  \  |
- * |------+-----+-----+------+-----+-----+-----+-----+---------+-----+-----+-----|
- * |      |     |     |      |     |     |     | Tab | CapsLck |     |     |     |
- * `-----------------------------------------------------------------------------'
+ * ,--------------------------------------------------------------------------.
+ * |      |     |     |      |     |     |     |  ^  |  &   |  *  |  (  |  )  |
+ * |------+-----+-----+------+-----+-----+-----+-----+------+-----+-----+-----|
+ * | Ctrl | Alt | Win | Shft |     |     |     |     |  {   |  }  |  |  |  '  |
+ * |------+-----+-----+------+-----+-----+-----+-----+------+-----+-----+-----|
+ * |      |     |     |      |     |     |     |     |  [   |  ]  |  `  |  \  |
+ * |------+-----+-----+------+-----+-----+-----+-----+------+-----+-----+-----|
+ * |      |     |     |      |     |     |     | Tab | Caps |     |     |     |
+ * `--------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, KC_CIRC,    KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
-    KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_PIPE, KC_QUOT,
-    _______, KC_GRV,  KC_BSLS, KC_LBRC, KC_RBRC, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_GRV, KC_BSLS,
+    _______, _______, _______, _______, _______, _______, _______, KC_CIRC,    KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
+    KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,    KC_LCBR, KC_RCBR, KC_PIPE, KC_QUOT,
+    _______, _______, _______, _______, _______, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_GRV, KC_BSLS,
     _______, _______, _______, _______, _______, _______, _______, TD(TD_TAB), KC_CAPS, _______, _______, _______
 ),
 /* Nav
@@ -198,8 +198,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_V):
         case TD(TD_F):
 	    case TD(TD_H):
-        case TD(TD_Q):
 		case TD(TD_W):
+        case TD(TD_Q):
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
