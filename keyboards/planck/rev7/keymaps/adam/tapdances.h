@@ -84,6 +84,9 @@ void tap_dance_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) 
        case SINGLE_TAP:
             register_code16(tap_hold->tap);
             break;
+       case SINGLE_HOLD:
+            register_code16(tap_hold->tap);
+            break;
        case DOUBLE_HOLD:
             register_code16(tap_hold->hold);
 	        break;
@@ -95,6 +98,9 @@ void tap_dance_tap_and_hold_reset(tap_dance_state_t *state, void *user_data) {
 
     switch (xtap_state.state) {
        case SINGLE_TAP:
+            unregister_code16(tap_hold->tap);
+            break;
+       case SINGLE_HOLD:
             unregister_code16(tap_hold->tap);
             break;
        case DOUBLE_HOLD:
