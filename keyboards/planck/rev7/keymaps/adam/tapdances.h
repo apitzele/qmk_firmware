@@ -88,17 +88,6 @@ void tap_dance_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) 
             register_code16(tap_hold->hold);
 	        break;
    }
-/*
-    if (state->pressed) {
-        if (state->count == 2) {
-            register_code16(tap_hold->hold);
-            tap_hold->held = tap_hold->hold;
-        } else {
-            register_code16(tap_hold->tap);
-            tap_hold->held = tap_hold->tap;
-        }
-    }
-*/
 }
 
 void tap_dance_tap_and_hold_reset(tap_dance_state_t *state, void *user_data) {
