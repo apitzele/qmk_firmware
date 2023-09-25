@@ -16,6 +16,7 @@ enum {
   TD_Z,
   TD_X,
   TD_C,
+  TD_D,
   TD_V,
   TD_F,
   TD_Y,
@@ -40,6 +41,7 @@ tap_dance_action_t tap_dance_actions[] = {
   [TD_Y] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_Y, RCTL(KC_Y)),
   [TD_X] = ACTION_TAP_DANCE_TAP_HOLD(KC_X, LCTL(KC_X)),
   [TD_C] = ACTION_TAP_DANCE_TAP_HOLD(KC_C, LCTL(KC_C)),
+  [TD_D] = ACTION_TAP_DANCE_TAP_HOLD(KC_D, LCTL(KC_S)), // Hold D = Ctrl + S
   [TD_V] = ACTION_TAP_DANCE_TAP_HOLD(KC_V, LCTL(KC_V)),
   [TD_F] = ACTION_TAP_DANCE_TAP_HOLD(KC_F, LCTL(KC_F)),
   [TD_W] = ACTION_TAP_DANCE_TAP_HOLD(KC_W, LCTL(KC_A)), // Hold W = Ctrl + A
@@ -85,6 +87,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_C):
         case TD(TD_V):
         case TD(TD_F):
+        case TD(TD_D):
 	    case TD(TD_H):
 		case TD(TD_W):
         case TD(TD_Q):
@@ -109,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   A  |   R  |   S  |   T  |   G    |     |     |   M   |  N   |   E  |   I  |   O   |
  * | Ctrl |  Alt |  Nav | Shft |        |     |     |       | Shft |  Win |  Alt | Ctrl  |
  * |------+------+------+------+--------+-----+-----+-------+------+------+------+-------|
- * |  Z*  |  X*  |  C*  |   D  |   V*   |     |     |   K   |  H*  |   ,  |   .  |   /   |
+ * |  Z*  |  X*  |  C*  |  D*  |   V*   |     |     |   K   |  H*  |   ,  |   .  |   /   |
  * |------+------+------+------+--------+-----+-----+-------+------+------+------+-------|
  * |      |      |      | Bspc |  Spc   |     |     | Enter | Del  |      |      |       |
  * |      |      |      | Num  |  Sym R |     |     | Sym L |      |      |      |       |
@@ -118,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT_planck_grid(
     TD(TD_Q),     TD(TD_W),     TD(TD_F),      KC_P,             KC_B,             _______, _______,    KC_J,             KC_L,         KC_U,         TD(TD_Y),     KC_SCLN,
     LCTL_T(KC_A), LALT_T(KC_R), LT(NAV, KC_S), LSFT_T(KC_T),     KC_G,             _______, _______,    KC_M,             RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O),
-    TD(TD_Z),     TD(TD_X),     TD(TD_C),      KC_D,             TD(TD_V),         _______, _______,    KC_K,             TD(TD_H),     KC_COMM,      KC_DOT,       TD(TD_SLASH),
+    TD(TD_Z),     TD(TD_X),     TD(TD_C),      TD(TD_D),         TD(TD_V),         _______, _______,    KC_K,             TD(TD_H),     KC_COMM,      KC_DOT,       TD(TD_SLASH),
     _______,      _______,      _______,       LT(NUM, KC_BSPC), LT(SYMR, KC_SPC), _______, _______,    LT(SYML, KC_ENT), TD(TD_DEL),   _______,      _______,      _______
 ),
 /* Raise (Sym L)
