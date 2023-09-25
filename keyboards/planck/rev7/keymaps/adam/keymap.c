@@ -1,11 +1,11 @@
 #include QMK_KEYBOARD_H
 #include "tapdances.h"
 
-enum planck_layers { _COLEMAK, _LOWER, _RAISE, _NUM, _NAV, _ADJUST };
+enum planck_layers { _COLEMAK, _SYMR, _SYML, _NUM, _NAV };
 enum planck_keycodes { COLEMAK = SAFE_RANGE };
 
-#define SYMR MO(_LOWER)
-#define SYML MO(_RAISE)
+#define SYMR MO(_SYMR)
+#define SYML MO(_SYML)
 #define NAV MO(_NAV)
 #define NUM MO(_NUM)
 
@@ -77,6 +77,28 @@ void slash_reset (tap_dance_state_t *state, void *user_data) {
   xtap_state.state = 0;
 }
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    tap_dance_action_t *action;
+
+    switch (keycode) { /* register tap hold actions w/ tap dance*/
+        case TD(TD_X):
+        case TD(TD_C):
+        case TD(TD_V):
+        case TD(TD_F):
+	    case TD(TD_H):
+		case TD(TD_W):
+        case TD(TD_Q):
+            action = &tap_dance_actions[TD_INDEX(keycode)];
+            if (!record->event.pressed && action->state.count && !action->state.finished) {
+                tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
+                tap_code16(tap_hold->tap);
+            }
+            return true;
+            break;
+    }
+    return true;
+}
+
 /* clang-format off */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -110,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |     |     |     | Bspc | Spc |     |     |     |      |     |     |      |
  * `--------------------------------------------------------------------------'
  */
-[_RAISE] = LAYOUT_planck_grid(
+[_SYML] = LAYOUT_planck_grid(
     KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, _______,  _______, _______, _______, _______,
     KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, _______, _______, _______, _______,  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL,
     _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______,
@@ -127,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |     |     |      |     |     |     | Tab | Caps |     |     |     |
  * `--------------------------------------------------------------------------'
  */
-[_LOWER] = LAYOUT_planck_grid(
+[_SYMR] = LAYOUT_planck_grid(
     _______, _______, _______, _______, _______, _______, _______, KC_CIRC,    KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
     KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, KC_QUOT, _______, _______, _______,    KC_LCBR, KC_RCBR, KC_PIPE, KC_QUOT,
     _______, _______, _______, _______, _______, _______, _______, _______,    KC_LBRC, KC_RBRC, KC_GRV, KC_BSLS,
@@ -167,50 +189,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL,       KC_LALT, KC_LGUI, KC_LSFT, _______, _______, _______, KC_PPLS, KC_P4,  KC_P5,   KC_P6,   KC_PMNS,
     _______,       _______, _______, _______, _______, _______, _______, KC_PDOT, KC_P1,  KC_P2,   KC_P3,   KC_PEQL,
     QK_BOOTLOADER, _______, _______, _______, _______, _______, _______, KC_P0,   _______, _______, _______, _______
-),
-
-/* Adjust (Lower + Raise)
- *                      v------------------------RGB CONTROL--------------------v
- * ,-----------------------------------------------------------------------------------.
- * | Flash| Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_ADJUST] = LAYOUT_planck_grid(
-    QK_BOOTLOADER, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,
-    _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
 };
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    tap_dance_action_t *action;
-
-    switch (keycode) { /* register tap hold actions w/ tap dance*/
-        case TD(TD_X):
-        case TD(TD_C):
-        case TD(TD_V):
-        case TD(TD_F):
-	    case TD(TD_H):
-		case TD(TD_W):
-        case TD(TD_Q):
-            action = &tap_dance_actions[TD_INDEX(keycode)];
-            if (!record->event.pressed && action->state.count && !action->state.finished) {
-                tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
-                tap_code16(tap_hold->tap);
-            }
-            return true;
-            break;
-    }
-    return true;
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
