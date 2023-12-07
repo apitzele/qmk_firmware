@@ -28,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
+//#define QUICK_TAP_TERM 0
+//#define TAPPING_TERM 100
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define AUTO_SHIFT_TIMEOUT 175
 #define NO_AUTO_SHIFT_NUMERIC
@@ -35,6 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_AUTO_SHIFT_TAB
 #define TAPPING_TERM 200
 #define COMBO_TERM 50
+#define SPLIT_TRANSPORT_MIRROR
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
