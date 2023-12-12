@@ -1,304 +1,104 @@
 #include QMK_KEYBOARD_H
+#include "tapdances.h"
 
-enum planck_layers { _COLEMAK, _LOWER, _RAISE, _ADJUST };
+enum layers { _MAIN, _SYMR, _SYML, _NUM, _NAV };
+#define SYMR MO(_SYMR)
+#define SYML MO(_SYML)
+#define NAV MO(_NAV)
+#define NUM MO(_NUM)
 
-enum planck_keycodes { COLEMAK = SAFE_RANGE };
-
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
-/*
-enum combos {
-  Z_T_MT,
-  Z_X_MT,
-  A_T_MT,
-  X_C_MT,
-  D_V_MT,
-  R_S_MT,
-  W_F_MT,
-  S_T_MT,
-  T_G_MT,
-  M_N_MT,
-  COMBO_LENGTH
+enum combos { 
+  TAB,
+  CAPS
 };
 
-uint16_t COMBO_LEN = COMBO_LENGTH;
-
-const uint16_t PROGMEM z_t_mt[] = { KC_Z, KC_T, COMBO_END};
-const uint16_t PROGMEM z_x_mt[] = { KC_Z, KC_X, COMBO_END};
-const uint16_t PROGMEM a_t_mt[] = { KC_A, KC_T, COMBO_END};
-const uint16_t PROGMEM x_c_mt[] = { KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM d_v_mt[] = { KC_D, KC_V, COMBO_END};
-const uint16_t PROGMEM r_s_mt[] = { KC_R, KC_S, COMBO_END};
-const uint16_t PROGMEM w_f_mt[] = { KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM s_t_mt[] = { KC_S, KC_T, COMBO_END};
-const uint16_t PROGMEM t_g_mt[] = { KC_T, KC_G, COMBO_END};
-const uint16_t PROGMEM m_n_mt[] = { KC_M, KC_N, COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {LT(NUM, KC_SPC), LT(NAV, KC_ENT), COMBO_END};
+const uint16_t PROGMEM caps_combo[] = {LT(SYMR, KC_T), LT(SYML, KC_N), COMBO_END};
 
 combo_t key_combos[] = {
-  [Z_T_MT] = COMBO(z_t_mt, LCTL(KC_Z)),
-  [Z_X_MT] = COMBO(z_x_mt, LCTL(KC_X)),
-  [A_T_MT] = COMBO(a_t_mt, LCTL(KC_A)),
-  [X_C_MT] = COMBO(x_c_mt, LCTL(KC_C)),
-  [D_V_MT] = COMBO(d_v_mt, LCTL(KC_V)),
-  [R_S_MT] = COMBO(r_s_mt, LCTL_T(KC_S)),
-  [W_F_MT] = COMBO(w_f_mt, LCTL_T(KC_F)),
-  [S_T_MT] = COMBO(s_t_mt, LCTL_T(KC_T)),
-  [T_G_MT] = COMBO(t_g_mt, LCTL_T(KC_G)),
-  [M_N_MT] = COMBO(m_n_mt, LCTL_T(KC_N))
+    [TAB] = COMBO(tab_combo, KC_TAB),
+    [CAPS] = COMBO(caps_combo, KC_CAPS),
 };
-*/
-//Tap Dance
+
+bool should_process_keypress(void) { return true; }
+
+//Tap dances
 enum {
-  TD_LEFT_HOME,
-  TD_RIGHT_END
- // TD_T_NAV,
-//  TD_Z_CTRLZ
+  T_DEL,
+  T_LT_HM,
+  T_RT_ED,
+  T_Z,
+  T_X,
+  T_C,
+  T_D,
+  T_V,
+  T_F,
+  T_H,
+  T_Q,
+  T_W,
+  T_SLASH
 };
 
-typedef struct {
-    uint16_t tap;
-    uint16_t hold;
-    uint16_t held;
-} tap_dance_tap_hold_t;
-
-typedef struct {
-  bool is_press_action;
-  int state;
-} tap;
-
-
-enum {
-  SINGLE_TAP = 1,
-  SINGLE_HOLD = 2,
-  DOUBLE_TAP = 3,
-  DOUBLE_HOLD = 4,
-  DOUBLE_SINGLE_TAP = 5, //send two single taps
-  TRIPLE_TAP = 6,
-  TRIPLE_HOLD = 7
-};
-
-void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (state->pressed) {
-        if (state->count == 1
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
-            register_code16(tap_hold->hold);
-            tap_hold->held = tap_hold->hold;
-        } else {
-            register_code16(tap_hold->tap);
-            tap_hold->held = tap_hold->tap;
-        }
-    }
-}
-
-int cur_dance (tap_dance_state_t *state);
-
-/*
-void t_nav_finished (tap_dance_state_t *state, void *user_data);
-void t_nav_reset (tap_dance_state_t *state, void *user_data);
-
-
-void z_ctlz_finished (tap_dance_state_t *state, void *user_data);
-void z_ctlz_reset (tap_dance_state_t *state, void *user_data);
-*/
-
-void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (tap_hold->held) {
-        unregister_code16(tap_hold->held);
-        tap_hold->held = 0;
-    }
-}
-
-void tap_dance_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (state->pressed) {
-        if (state->count == 2
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
-            register_code16(tap_hold->hold);
-            tap_hold->held = tap_hold->hold;
-        } else {
-            register_code16(tap_hold->tap);
-            tap_hold->held = tap_hold->tap;
-        }
-    }
-}
-
-#define ACTION_TAP_DANCE_TAP_HOLD(tap, hold) \
-    { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
-
-#define ACTION_TAP_DANCE_TAP_AND_HOLD(tap, hold) \
-{ .fn = {NULL, tap_dance_tap_and_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
+void slash_finished (tap_dance_state_t *state, void *user_data);
+void slash_reset (tap_dance_state_t *state, void *user_data);
 
 tap_dance_action_t tap_dance_actions[] = {
-  [TD_LEFT_HOME] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_LEFT, KC_HOME),
-  [TD_RIGHT_END] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_RIGHT, KC_END),
-  //[TD_T_NAV]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,t_nav_finished, t_nav_reset),
-  //[TD_Z_CTRLZ] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,z_ctlz_finished, z_ctlz_reset)
+  [T_DEL] = ACTION_TAP_DANCE_TAP_AND_HOLD (KC_DEL, RSFT(KC_DEL)),
+  [T_LT_HM] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_LEFT, KC_HOME),
+  [T_RT_ED] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_RIGHT, KC_END),
+  [T_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, slash_finished, slash_reset),
+  [T_X] = ACTION_TAP_DANCE_TAP_HOLD(KC_X, LCTL(KC_X)),
+  [T_C] = ACTION_TAP_DANCE_TAP_HOLD(KC_C, LCTL(KC_C)),
+  [T_D] = ACTION_TAP_DANCE_TAP_HOLD(KC_D, LCTL(KC_S)), // Hold D = Ctrl + S
+  [T_V] = ACTION_TAP_DANCE_TAP_HOLD(KC_V, LCTL(KC_V)),
+  [T_F] = ACTION_TAP_DANCE_TAP_HOLD(KC_F, LCTL(KC_F)),
+  [T_W] = ACTION_TAP_DANCE_TAP_HOLD(KC_W, LCTL(KC_A)), // Hold W = Ctrl + A
+  [T_H] = ACTION_TAP_DANCE_TAP_HOLD(KC_H, LCTL(KC_H)),
+  [T_Q] = ACTION_TAP_DANCE_TAP_HOLD(KC_Q, KC_ESC)
 };
 
-/* clang-format off */
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-/* Colemak DH
- * ,----------------------------------------------------------------------------------------.
- * |   Q  |   W  |   F  |   P  |   B   |      |      |   J    |   L   |   U  |   Y  |   ;   |
- * |------+------+------+------+-------+------+------+--------+-------+------+------+-------|
- * |   A  |   R  |   S  |   T  |   G   |      |      |   M    |   N   |   E  |   I  |   O   |
- * |      |      |      |  Nav |       |      |      |        |       |      |      |       |
- * |------+------+------+------+-------+------+------+--------+-------+------+------+-------|
- * |   Z  |   X  |   C  |   D  |   V   |      |      |   K    |   H   |   ,  |   .  |   /   |
- * | Ctrl |      |      |      |       |      |      |        |       |      |      |       |
- * |------+------+------+------+-------+------+------+--------+-------+------+------+-------|
- * |      |      |      | Bksp |  Spc  | Tab  | Esc  |  Enter |  Del  |      |      |       |
- * |      |      |      |      | Lower | Shft | Win  |  Lower |  Alt  |      |      |       |
- * `----------------------------------------------------------------------------------------'
- */
-[_COLEMAK] = LAYOUT_planck_grid(
-    KC_Q,               KC_W,    KC_F,    KC_P,            KC_B,              _______,              _______,              KC_J,              KC_L,                 KC_U,    KC_Y,    KC_SCLN,
-    KC_A,               KC_R,    KC_S,    LT(RAISE, KC_T), KC_G,              _______,              _______,              KC_M,              KC_N,                 KC_E,    KC_I,    KC_O,
-    MT(MOD_LCTL, KC_Z), KC_X,    KC_C,    KC_D,            KC_V,              _______,              _______,              KC_K,              KC_H,                 KC_COMM, KC_DOT,  KC_SLSH,
-    _______,            _______, _______, KC_BSPC,         LT(LOWER, KC_SPC), MT(MOD_RSFT, KC_TAB), MT(MOD_LGUI, KC_ESC), LT(LOWER, KC_ENT), MT(MOD_RALT, KC_DEL), _______, _______, _______
-),
-
-/* Lower
- * ,-----------------------------------------------------------------------.
- * |  1  |  2  |  3  |  4  |  5  |     |     |  6  |  7  |  8  |  9  |  0  |
- * |-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
- * |  =  |  +  |  -  |  _  |     |     |     |  \  |  [{ | }]  |  `  |  '  |
- * |-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
- * |  !  |  @  |  #  |  $  |  %  |     |     |  ^  |  &  |  *  |  (  |  )  |
- * |-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
- * |     |     |     |     |     |     |     |     |     |     |     |     |
- * `-----------------------------------------------------------------------'
- */
-[_LOWER] = LAYOUT_planck_grid(
-    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    _______, _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
-    KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, _______, _______, _______, KC_BSLS, KC_LBRC, KC_RBRC, KC_GRV,  KC_QUOT,
-    KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-),
-/* Raise
-z * ,--------------------------------------------------------------------------------------.
- * |  F5  |  F8  | Ctl-F12 |     |     |         |     |     |      |      |      |       |
- * |------+------+---------+-----+-----+---------+-----+-----+------+------+------+-------|
- * |  F10 |  F12 |   F12   |     |     |         |     |     | Left |  Up  | Down | Right |
- * |------+------+---------+-----+-----+---------+-----+-----+------+------+------+-------|
- * |      |      |         |     |     |         |     |     |      |      |      |       |
- * |------+------+---------+-----+-----+---------+-----+-----+------+------+------+-------|
- * |      |      |         |     |     | CapsWrd |     |     |      |      |      |       |
- * `---------------------------------------------------------------------------------------'
- */
-[_RAISE] = LAYOUT_planck_grid(
-    KC_F5,   KC_F8,   LCTL(KC_F12), _______, _______, _______, _______, _______, _______,          _______, _______, _______,
-    KC_F10,  KC_F11,  KC_F12,       _______, _______, _______, _______, _______, TD(TD_LEFT_HOME), KC_UP,   KC_DOWN, TD(TD_RIGHT_END),
-    _______, _______, _______,      _______, _______, _______, _______, _______, _______,          _______, _______, _______,
-    _______, _______, _______,      _______, _______, CW_TOGG, _______, _______, _______,          _______, _______, _______
-),
-
-/* Adjust (Lower + Raise)
- *                      v------------------------RGB CONTROL--------------------v
- * ,-----------------------------------------------------------------------------------.
- * | Flash| Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_ADJUST] = LAYOUT_planck_grid(
-    QK_BOOTLOADER, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,
-    _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______,       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-)
-};
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
-int cur_dance (tap_dance_state_t *state) {
-  if (state->count == 1) {
-    if (state->interrupted || !state->pressed)  return SINGLE_TAP;
-    //key has not been interrupted, but they key is still held. Means you want to send a 'HOLD'.
-    else return SINGLE_HOLD;
-  }
-  else if (state->count == 2) {
-    /*
-     * DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
-     * action when hitting 'pp'. Suggested use case for this return value is when you want to send two
-     * keystrokes of the key, and not the 'double tap' action/macro.
-    */
-    if (state->interrupted) return DOUBLE_SINGLE_TAP;
-    else if (state->pressed) return DOUBLE_HOLD;
-    else return DOUBLE_TAP;
-  }
-  else return 8; //magic number. At some point this method will expand to work for more presses
-}
-
-//instanalize an instance of 'tap' for the 'x' tap dance.
-/*
-static tap xtap_state = {
-  .is_press_action = true,
-  .state = 0
-};
-
-
-void t_nav_finished (tap_dance_state_t *state, void *user_data) {
+void slash_finished (tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
-    case SINGLE_TAP: register_code(KC_T); break;
-    case SINGLE_HOLD: layer_on(_RAISE); break;
-    case DOUBLE_HOLD: register_code(MT(MOD_LCTL, KC_T)); break;
+    case SINGLE_TAP: register_code(KC_SLSH); break;
+    case SINGLE_HOLD:
+	    register_code(KC_RSFT);
+   		register_code(KC_SLSH);
+	    break;
+    case DOUBLE_HOLD:
+	    register_code(KC_RCTL);
+   		register_code(KC_SLSH);
+		break;
   }
 }
 
-void t_nav_reset (tap_dance_state_t *state, void *user_data) {
+void slash_reset (tap_dance_state_t *state, void *user_data) {
   switch (xtap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_T); break;
-    case SINGLE_HOLD: layer_off(_RAISE); break;
-    case DOUBLE_HOLD: unregister_code(MT(MOD_LCTL, KC_T)); break;
+    case SINGLE_TAP: unregister_code(KC_SLSH); break;
+    case SINGLE_HOLD:
+	    unregister_code(KC_RSFT);
+   		unregister_code(KC_SLSH);
+	    break;
+    case DOUBLE_HOLD:
+        unregister_code(KC_RCTL);
+   		unregister_code(KC_SLSH);
+        break;
   }
   xtap_state.state = 0;
 }
 
-
-void z_ctlz_finished (tap_dance_state_t *state, void *user_data) {
-  xtap_state.state = cur_dance(state);
-  switch (xtap_state.state) {
-    case SINGLE_TAP: register_code(KC_Z); break;
-    case SINGLE_HOLD: register_code(KC_LCTL); break;
-    case DOUBLE_HOLD: register_code(MT(MOD_LCTL, KC_Z)); break;
-  }
-}
-
-void z_ctlz_reset (tap_dance_state_t *state, void *user_data) {
-  switch (xtap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_Z); break;
-    case SINGLE_HOLD: unregister_code(KC_LCTL); break;
-    case DOUBLE_HOLD: unregister_code(MT(MOD_LCTL, KC_Z)); break;
-  }
-  xtap_state.state = 0;
-}
-*/
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     tap_dance_action_t *action;
 
     switch (keycode) { /* register tap hold actions w/ tap dance*/
-        case TD(TD_LEFT_HOME):
-        case TD(TD_RIGHT_END):
+        case TD(T_X):
+        case TD(T_C):
+        case TD(T_V):
+        case TD(T_F):
+        case TD(T_D):
+	    case TD(T_H):
+		case TD(T_W):
+        case TD(T_Q):
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
@@ -309,3 +109,57 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+/* clang-format off */
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
+    [_MAIN] = LAYOUT_planck_grid(
+    TD(T_Q),      TD(T_W),      TD(T_F),      KC_P,           KC_B,            XXXXXXX, XXXXXXX,  KC_J,            KC_L,           KC_U,         KC_Y,         KC_SCLN,
+ //|-------- ---+-------------+-------------+---------------+---------------+                   +----------------+---------------+-------------+-------------+-------------|
+    LCTL_T(KC_A), LSFT_T(KC_R), LALT_T(KC_S), LT(SYMR, KC_T), KC_G,            XXXXXXX, XXXXXXX,  KC_M,            LT(SYML, KC_N), LALT_T(KC_E), RSFT_T(KC_I), RCTL_T(KC_O),
+ //|------------+-------------+-------------+---------------+---------------+                   +-----+----------+---------------+-------------+-------------+-------------|
+    KC_Z,         TD(T_X),      TD(T_C),      TD(T_D),        TD(T_V),         XXXXXXX, XXXXXXX,  KC_K,            TD(T_H),        KC_COMM,      KC_DOT,       TD(T_SLASH),
+ //,------------------------------------------------------------------------+                   +--------------------------------------------------------------------------.
+    XXXXXXX,      XXXXXXX,      XXXXXXX,      KC_BSPC,        LT(NUM, KC_SPC), XXXXXXX, XXXXXXX,  LT(NAV, KC_ENT), TD(T_DEL),      XXXXXXX,      XXXXXXX,      XXXXXXX
+  ),
+
+  [_SYMR] = LAYOUT_planck_grid(
+      _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX,  KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
+  //|--------+--------+--------+--------+--------+                   +-------+--------+--------+--------+--------|
+      KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, _______, XXXXXXX, XXXXXXX,  _______, KC_LCBR, KC_RCBR, KC_QUOT, KC_DQT,
+  //|--------+--------+--------+--------+--------+                   +-------+--------+--------+--------+--------|
+      _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX,  _______, KC_LBRC, KC_RBRC, KC_GRV,  KC_BSLS,
+  //,--------------------------------------------+                   +-------------------------------------------.
+      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX,  KC_ENT,  KC_DEL,  XXXXXXX, XXXXXXX, XXXXXXX
+  ),
+
+  [_SYML] = LAYOUT_planck_grid(
+      KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, XXXXXXX, XXXXXXX,  _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+                   +-------+--------+--------+--------+--------|
+      KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, _______, XXXXXXX, XXXXXXX,  _______, KC_RGUI, KC_RALT, KC_RSFT, KC_RCTL,
+  //|--------+--------+--------+--------+--------+                   +-------+--------+--------+--------+--------|
+      _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX,  _______, _______, _______, _______, _______,
+  //,--------------------------------------------+                   +-------------------------------------------.
+      XXXXXXX, XXXXXXX, XXXXXXX, KC_BSPC, KC_SPC,  XXXXXXX, XXXXXXX,  _______, _______,  XXXXXXX, XXXXXXX, XXXXXXX
+  ),
+
+  [_NUM] = LAYOUT_planck_grid(
+      _______,    _______,    QK_BOOT, _______, _______, XXXXXXX, XXXXXXX,  KC_PAST, KC_P7,  KC_P8,   KC_P9,   KC_PSLS,
+  //|-----------+-----------+--------+--------+--------+                   +-------+--------+--------+--------+--------|
+      KC_LCTL,    KC_LSFT,    KC_LALT, KC_LGUI, _______, XXXXXXX, XXXXXXX,  KC_PPLS, KC_P4,  KC_P5,   KC_P6,   KC_PMNS,
+  //|-----------+-----------+--------+--------+--------+                   +-------+--------+--------+--------+--------|
+      LCTL(KC_Z), LCTL(KC_Y), _______, _______, _______, XXXXXXX, XXXXXXX,  KC_PDOT, KC_P1,  KC_P2,   KC_P3,   KC_PEQL,
+  //,--------------------------------------------+                         +-------------------------------------------.
+      XXXXXXX,    XXXXXXX,    XXXXXXX, _______, _______, XXXXXXX, XXXXXXX,  KC_P0, _______,  XXXXXXX, XXXXXXX, XXXXXXX
+  ),
+
+    [_NAV] = LAYOUT_planck_grid(
+      _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX,  _______, _______,     _______, _______, _______,
+  //|--------+--------+--------+--------+--------+                  +--------+------------+--------+--------+-------------|
+      KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, _______, XXXXXXX, XXXXXXX,  _______, TD(T_LT_HM), KC_UP,   KC_DOWN, TD(T_RT_ED),
+  //|--------+--------+--------+--------+--------+                  +--------+------------+--------+--------+-------------|
+      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F6,   XXXXXXX, XXXXXXX,  KC_F5,   KC_F10,      KC_F11,  KC_F12,  RCTL(KC_F12),
+  //,--------+--------+--------+--------+--------+                  +--------+------------+--------+--------+-------------.
+      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX,  _______, KC_F8,       XXXXXXX, XXXXXXX, XXXXXXX
+  )
+};
