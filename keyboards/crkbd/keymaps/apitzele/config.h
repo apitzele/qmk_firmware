@@ -25,11 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Select hand configuration */
 
 #define MASTER_LEFT
-// #define MASTER_RIGHT
 // #define EE_HANDS
-
 //#define QUICK_TAP_TERM 0
-//#define TAPPING_TERM 100
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define AUTO_SHIFT_TIMEOUT 175
 #define NO_AUTO_SHIFT_NUMERIC
