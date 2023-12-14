@@ -113,8 +113,6 @@ void tap_dance_tap_and_hold_reset(tap_dance_state_t *state, void *user_data) {
 //Tap dances
 enum {
   T_DEL,
-  T_LT_HM,
-  T_RT_ED,
   T_Z,
   T_X,
   T_C,
@@ -132,8 +130,6 @@ void slash_reset (tap_dance_state_t *state, void *user_data);
 
 tap_dance_action_t tap_dance_actions[] = {
   [T_DEL] = ACTION_TAP_DANCE_TAP_AND_HOLD (KC_DEL, RSFT(KC_DEL)),
-  [T_LT_HM] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_LEFT, KC_HOME),
-  [T_RT_ED] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_RIGHT, KC_END),
   [T_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, slash_finished, slash_reset),
   [T_X] = ACTION_TAP_DANCE_TAP_HOLD(KC_X, LCTL(KC_X)),
   [T_C] = ACTION_TAP_DANCE_TAP_HOLD(KC_C, LCTL(KC_C)),

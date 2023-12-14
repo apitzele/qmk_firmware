@@ -18,16 +18,16 @@ extern const struct KeycodeLayout layout;
 const struct KeycodeLayout layout = {
     { // Default
         {
-            TD(T_Q), TD(T_W), TD(T_F), KC_P, KC_B, KC_J, KC_L, KC_U, KC_Y, KC_SCLN
+            TD(T_Q),      TD(T_W),      TD(T_F),      KC_P,           KC_B,     KC_J,            KC_L,           KC_U,         KC_Y,         KC_SCLN
         },
         {
-            LCTL_T(KC_A), LSFT_T(KC_R), LALT_T(KC_S), LT(SYMR, KC_T), KC_G, KC_M, LT(SYML, KC_N), LALT_T(KC_E), RSFT_T(KC_I), RCTL_T(KC_O)
+            LCTL_T(KC_A), LSFT_T(KC_R), LALT_T(KC_S), LT(SYMR, KC_T), KC_G,     KC_M,            LT(SYML, KC_N), LALT_T(KC_E), RSFT_T(KC_I), RCTL_T(KC_O)
         },
         {
-            KC_Z, TD(T_X), TD(T_C), TD(T_D), TD(T_V),  KC_K, TD(T_H),KC_COMM, KC_DOT,TD(T_SLASH)
+            KC_Z,         TD(T_X),      TD(T_C),      TD(T_D),        TD(T_V),  KC_K,            TD(T_H),        KC_COMM,      KC_DOT,       TD(T_SLASH)
         },
         {
-            KC_BSPC, LT(NUM, KC_SPC), LT(NAV, KC_ENT), TD(T_DEL)
+                                                      KC_BSPC, LT(NUM, KC_SPC), LT(NAV, KC_ENT), TD(T_DEL)
         }
     },
     { // Num
@@ -41,21 +41,21 @@ const struct KeycodeLayout layout = {
             LCTL(KC_Z), LCTL(KC_Y), _______, _______, _______, KC_PDOT, KC_P1,  KC_P2,   KC_P3,   KC_PEQL
         },
         {
-            _______,  _______, KC_P0, _______
+                                             _______,  _______, KC_P0, _______
         }
     },
     { // Nav
         {
-            _______, _______, _______, _______, _______, _______, _______,    _______,  _______, _______
+            _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_PGDN, KC_END
         },
         {
-            KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, _______, _______, TD(T_LT_HM), KC_UP,  KC_DOWN, TD(T_RT_ED)
+            KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, _______, KC_HOME, KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT
         },
         {
-            KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F6, KC_F5,   KC_F10,      KC_F11, KC_F12,  RCTL(KC_F12)
+            KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F6,   KC_F5,   KC_F10,  KC_F11,  KC_F12,  RCTL(KC_F12)
         },
         {
-            _______, _______, _______, KC_F8
+                                       _______, _______, _______, KC_F8
         }
     },
     { // Symbols Right
@@ -69,7 +69,7 @@ const struct KeycodeLayout layout = {
             _______, _______, _______, _______, _______,  _______, KC_LBRC, KC_RBRC, KC_GRV,  KC_BSLS
         },
         {
-            _______, _______, KC_ENT, KC_DEL
+                                       _______, _______, KC_ENT, KC_DEL
         }
     },
     { // Symbols Left
@@ -83,7 +83,7 @@ const struct KeycodeLayout layout = {
             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         },
         {
-            KC_BSPC, KC_SPC, _______, _______
+                                       KC_BSPC, KC_SPC,  _______, _______
         }
     }
 };
