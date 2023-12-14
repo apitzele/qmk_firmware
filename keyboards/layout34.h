@@ -1,21 +1,9 @@
+// 34 key layout w/ combos
 enum layers { _MAIN, _SYMR, _SYML, _NUM, _NAV };
 #define SYMR MO(_SYMR)
 #define SYML MO(_SYML)
 #define NAV MO(_NAV)
 #define NUM MO(_NUM)
-
-enum combos { 
-  TAB,
-  CAPS
-};
-
-const uint16_t PROGMEM tab_combo[] = {LT(NUM, KC_SPC), LT(NAV, KC_ENT), COMBO_END};
-const uint16_t PROGMEM caps_combo[] = {LT(SYMR, KC_T), LT(SYML, KC_N), COMBO_END};
-
-combo_t key_combos[] = {
-    [TAB] = COMBO(tab_combo, KC_TAB),
-    [CAPS] = COMBO(caps_combo, KC_CAPS),
-};
 
 struct KeycodeLayout {
     uint16_t dft[4][10];
@@ -98,4 +86,18 @@ const struct KeycodeLayout layout = {
             KC_BSPC, KC_SPC, _______, _______
         }
     }
+};
+
+// Combos
+enum combos { 
+  TAB,
+  CAPS
+};
+
+const uint16_t PROGMEM tab_combo[] = {LT(NUM, KC_SPC), LT(NAV, KC_ENT), COMBO_END};
+const uint16_t PROGMEM caps_combo[] = {LT(SYMR, KC_T), LT(SYML, KC_N), COMBO_END};
+
+combo_t key_combos[] = {
+    [TAB] = COMBO(tab_combo, KC_TAB),
+    [CAPS] = COMBO(caps_combo, KC_CAPS),
 };

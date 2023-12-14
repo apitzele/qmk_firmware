@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "tapdances.h"
-#include "34KeyLayout.h"
+#include "layout34.h"
 #include "oled.h"
 
 // FLASH: qmk flash -kb crkbd -km apitzele -e CONVERT_TO=promicro_rp2040
