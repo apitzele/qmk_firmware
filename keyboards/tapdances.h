@@ -112,7 +112,12 @@ void tap_dance_tap_and_hold_reset(tap_dance_state_t *state, void *user_data) {
 
 //Tap dances
 enum {
+  T_QUOT,
   T_DEL,
+  T_GRV,
+  T_LBRC,
+  T_RBRC,
+  T_BSLS,
   T_Z,
   T_X,
   T_C,
@@ -129,16 +134,24 @@ void slash_finished (tap_dance_state_t *state, void *user_data);
 void slash_reset (tap_dance_state_t *state, void *user_data);
 
 tap_dance_action_t tap_dance_actions[] = {
-  [T_DEL] = ACTION_TAP_DANCE_TAP_AND_HOLD (KC_DEL, RSFT(KC_DEL)),
+  [T_DEL] =   ACTION_TAP_DANCE_TAP_AND_HOLD (KC_DEL, RSFT(KC_DEL)),
+
   [T_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, slash_finished, slash_reset),
-  [T_X] = ACTION_TAP_DANCE_TAP_HOLD(KC_X, LCTL(KC_X)),
-  [T_C] = ACTION_TAP_DANCE_TAP_HOLD(KC_C, LCTL(KC_C)),
-  [T_D] = ACTION_TAP_DANCE_TAP_HOLD(KC_D, LCTL(KC_S)), // Hold D = Ctrl + S
-  [T_V] = ACTION_TAP_DANCE_TAP_HOLD(KC_V, LCTL(KC_V)),
-  [T_F] = ACTION_TAP_DANCE_TAP_HOLD(KC_F, LCTL(KC_F)),
-  [T_W] = ACTION_TAP_DANCE_TAP_HOLD(KC_W, LCTL(KC_A)), // Hold W = Ctrl + A
-  [T_H] = ACTION_TAP_DANCE_TAP_HOLD(KC_H, LCTL(KC_H)),
-  [T_Q] = ACTION_TAP_DANCE_TAP_HOLD(KC_Q, KC_ESC)
+
+  [T_QUOT] =  ACTION_TAP_DANCE_TAP_HOLD(KC_QUOT, KC_QUOT),
+  [T_GRV] =   ACTION_TAP_DANCE_TAP_HOLD(KC_GRV, KC_GRV),
+  [T_LBRC] =  ACTION_TAP_DANCE_TAP_HOLD(KC_LBRC, KC_LBRC),
+  [T_RBRC] =  ACTION_TAP_DANCE_TAP_HOLD(KC_RBRC, KC_RBRC),
+  [T_BSLS] =  ACTION_TAP_DANCE_TAP_HOLD(KC_BSLS, KC_BSLS),
+  [T_X] =     ACTION_TAP_DANCE_TAP_HOLD(KC_X, LCTL(KC_X)),
+  [T_C] =     ACTION_TAP_DANCE_TAP_HOLD(KC_C, LCTL(KC_C)),
+  [T_D] =     ACTION_TAP_DANCE_TAP_HOLD(KC_D, LCTL(KC_S)), // Hold D = Ctrl + S
+  [T_V] =     ACTION_TAP_DANCE_TAP_HOLD(KC_V, LCTL(KC_V)),
+  [T_F] =     ACTION_TAP_DANCE_TAP_HOLD(KC_F, LCTL(KC_F)),
+  [T_W] =     ACTION_TAP_DANCE_TAP_HOLD(KC_W, LCTL(KC_A)), // Hold W = Ctrl + A
+  [T_H] =     ACTION_TAP_DANCE_TAP_HOLD(KC_H, LCTL(KC_H)),
+  [T_Q] =     ACTION_TAP_DANCE_TAP_HOLD(KC_Q, KC_ESC),
+  [T_Z] =     ACTION_TAP_DANCE_TAP_HOLD(KC_Z, KC_TAB)
 };
 
 void slash_finished (tap_dance_state_t *state, void *user_data) {
@@ -175,13 +188,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     tap_dance_action_t *action;
 
     switch (keycode) { /* register tap hold actions w/ tap dance*/
+        case TD(T_GRV):
+        case TD(T_QUOT):
+        case TD(T_LBRC):
+        case TD(T_RBRC):
+        case TD(T_BSLS):
+        case TD(T_Z):
         case TD(T_X):
         case TD(T_C):
         case TD(T_V):
         case TD(T_F):
         case TD(T_D):
-	    case TD(T_H):
-		case TD(T_W):
+	      case TD(T_H):
+		    case TD(T_W):
         case TD(T_Q):
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
