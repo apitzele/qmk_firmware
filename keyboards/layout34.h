@@ -87,3 +87,9 @@ const struct KeycodeLayout layout = {
         }
     }
 };
+
+const uint16_t PROGMEM combo0[] = { LSFT_T(KC_R), RSFT_T(KC_I), COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  COMBO(combo0, KC_CAPS)
+};

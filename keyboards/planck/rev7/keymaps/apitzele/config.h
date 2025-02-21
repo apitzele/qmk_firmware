@@ -53,8 +53,6 @@
 #define NO_AUTO_SHIFT_NUMERIC
 #define NO_AUTO_SHIFT_ALPHA
 
-#define COMBO_COUNT 3
-
 #define TAPPING_TERM_PER_KEY
 
 //#define COMBO_TERM 50        // how quickly all combo keys must be pressed in succession to trigger

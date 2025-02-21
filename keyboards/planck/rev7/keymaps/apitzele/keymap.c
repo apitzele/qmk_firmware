@@ -36,12 +36,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX,           XXXXXXX,           XXXXXXX,           layout.syml[3][0], layout.syml[3][1], XXXXXXX, XXXXXXX, layout.syml[3][2], layout.syml[3][3], XXXXXXX,           XXXXXXX,           XXXXXXX
   )
 };
-
-
-const uint16_t PROGMEM combo0[] = { LSFT_T(KC_R), RSFT_T(KC_I), COMBO_END};
-const uint16_t PROGMEM combo1[] = { MT(MOD_LCTL, KC_A), MT(MOD_RCTL, KC_O), COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-  COMBO(combo0, KC_CAPS),
-  COMBO(combo1, KC_CAPS)
-};
