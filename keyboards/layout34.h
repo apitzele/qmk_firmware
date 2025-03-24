@@ -21,7 +21,7 @@ const struct KeycodeLayout layout = {
             TD(T_Q),      TD(T_W),      TD(T_F),      KC_P,              KC_B,            KC_J,            KC_L,           KC_U,         KC_Y,         KC_SCLN
         },
         {
-            LCTL_T(KC_A), LSFT_T(KC_R), LGUI_T(KC_S), LALT_T(KC_T),      KC_G,            KC_M,            LALT_T(KC_N),  RGUI_T(KC_E),  RSFT_T(KC_I), RCTL_T(KC_O)
+            LCTL_T(KC_A), LSFT_T(KC_R), LGUI_T(KC_S), LALT_T(KC_T),      MEH_T(KC_G),     MEH_T(KC_M),       LALT_T(KC_N),  RGUI_T(KC_E),  RSFT_T(KC_I), RCTL_T(KC_O)
         },
         {
             TD(T_Z),      TD(T_X),      TD(T_C),      TD(T_D),           TD(T_V),         KC_K,            TD(T_H),        KC_COMM,      KC_DOT,       TD(T_SLASH)
