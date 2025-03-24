@@ -27,7 +27,7 @@ const struct KeycodeLayout layout = {
             TD(T_Z),      TD(T_X),      TD(T_C),      TD(T_D),           TD(T_V),         KC_K,            TD(T_H),        KC_COMM,      KC_DOT,       TD(T_SLASH)
         },
         {
-                                                      LT(SYMR, KC_BSPC), LT(NUM, KC_SPC), LT(NAV, KC_ENT), LT(SYML, T_DEL)
+                                                      LT(SYMR, KC_BSPC), LT(NUM, KC_SPC), LT(NAV, KC_ENT), LT(SYML, KC_DEL)
         }
     },
     { // Num
@@ -46,7 +46,7 @@ const struct KeycodeLayout layout = {
     },
     { // Nav
         {
-            _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
+            KC_NUM,  KC_SCRL, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
         },
         {
             KC_LCTL, KC_LSFT, KC_LGUI, KC_LALT, _______, KC_F8,   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT

@@ -4,6 +4,7 @@
 #include "oled.h"
 
 // FLASH: qmk flash -kb crkbd -km apitzele -e CONVERT_TO=promicro_rp2040
+// COMPILE: qmk compile -kb crkbd -km apitzele -e CONVERT_TO=promicro_rp2040
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_MAIN] = LAYOUT_split_3x6_3(
