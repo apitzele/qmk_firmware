@@ -13,6 +13,29 @@ struct KeycodeLayout {
     uint16_t syml[4][10];
 };
  
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TD(T_Q):
+            return TAPPING_TERM -65;
+        case MT(MOD_LCTL, KC_A):
+            return TAPPING_TERM + 100;
+        case MT(MOD_LSFT, KC_R):
+            return TAPPING_TERM + 100;
+        case LT(3,KC_BSPC):
+            return TAPPING_TERM -65;
+        case MT(MOD_RGUI, KC_E):
+            return TAPPING_TERM + 100;
+        case MT(MOD_RSFT, KC_I):
+            return TAPPING_TERM + 100;
+        case MT(MOD_RCTL, KC_O):
+            return TAPPING_TERM + 100;
+        case LT(4,KC_DELETE):
+            return TAPPING_TERM -65;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
  // Define an array of keycodes
 extern const struct KeycodeLayout layout;
 const struct KeycodeLayout layout = {
@@ -88,8 +111,16 @@ const struct KeycodeLayout layout = {
     }
 };
 
-const uint16_t PROGMEM combo0[] = { LSFT_T(KC_R), RSFT_T(KC_I), COMBO_END};
+const uint16_t PROGMEM combCaps[] = { MT(MOD_LSFT, KC_R), MT(MOD_RSFT, KC_I), COMBO_END};
+const uint16_t PROGMEM combPrfx[] = { MT(MOD_LCTL, KC_A), MT(MOD_RCTL, KC_O), COMBO_END};
+const uint16_t PROGMEM combCAD[] = { TD(T_Q), KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combTab[] = { MT(MOD_LALT, KC_T), MT(MOD_LALT, KC_N), COMBO_END};
+const uint16_t PROGMEM combSTab[] = { MT(MOD_LGUI, KC_S), MT(MOD_RGUI, KC_E), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-  COMBO(combo0, KC_CAPS)
+    COMBO(combCaps, KC_CAPS),
+    COMBO(combPrfx, MAC_PRFX),
+    COMBO(combCAD, LALT(LCTL(KC_DELETE))),
+    COMBO(combTab, KC_TAB),
+    COMBO(combSTab, LSFT(KC_TAB)),
 };

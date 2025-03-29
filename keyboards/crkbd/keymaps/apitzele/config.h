@@ -28,12 +28,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 //#define QUICK_TAP_TERM 0
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
-#define AUTO_SHIFT_TIMEOUT 175
+
 #define NO_AUTO_SHIFT_NUMERIC
 #define NO_AUTO_SHIFT_ALPHA
 #define NO_AUTO_SHIFT_TAB
-#define TAPPING_TERM 200
-#define COMBO_TERM 50
+#define COMBO_COUNT 5
+#define TAPPING_TERM_PER_KEY
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING

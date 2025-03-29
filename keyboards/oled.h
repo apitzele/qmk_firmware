@@ -41,7 +41,7 @@ bool oled_task_user(void) {
       }
   } else {
     // Display a message or logo on the slave side
-    oled_write_P(PSTR("Slave Side\n"), false);
+    oled_write_P(PSTR("Not connected\n"), false);
   }
 
   return false;
