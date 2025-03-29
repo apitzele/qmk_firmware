@@ -1,9 +1,5 @@
 #include QMK_KEYBOARD_H
 
-enum custom_keycodes {
-  MAC_PRFX
-};
-
 typedef struct {
   uint16_t tap;
   uint16_t hold;
@@ -31,12 +27,6 @@ enum tap_dance_codes {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case MAC_PRFX:
-    if (record->event.pressed) {
-      SEND_STRING(SS_LSFT(SS_TAP(X_P)) SS_DELAY(100) SS_LSFT(SS_TAP(X_2)));
-    }
-    break;
-
     case TD(T_Q):
     case TD(T_W):
     case TD(T_F):

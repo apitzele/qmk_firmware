@@ -112,14 +112,12 @@ const struct KeycodeLayout layout = {
 };
 
 const uint16_t PROGMEM combCaps[] = { MT(MOD_LSFT, KC_R), MT(MOD_RSFT, KC_I), COMBO_END};
-const uint16_t PROGMEM combPrfx[] = { MT(MOD_LCTL, KC_A), MT(MOD_RCTL, KC_O), COMBO_END};
 const uint16_t PROGMEM combCAD[] = { TD(T_Q), KC_SCLN, COMBO_END};
 const uint16_t PROGMEM combTab[] = { MT(MOD_LALT, KC_T), MT(MOD_LALT, KC_N), COMBO_END};
 const uint16_t PROGMEM combSTab[] = { MT(MOD_LGUI, KC_S), MT(MOD_RGUI, KC_E), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combCaps, KC_CAPS),
-    COMBO(combPrfx, MAC_PRFX),
     COMBO(combCAD, LALT(LCTL(KC_DELETE))),
     COMBO(combTab, KC_TAB),
     COMBO(combSTab, LSFT(KC_TAB)),

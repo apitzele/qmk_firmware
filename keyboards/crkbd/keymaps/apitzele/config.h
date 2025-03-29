@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_AUTO_SHIFT_NUMERIC
 #define NO_AUTO_SHIFT_ALPHA
 #define NO_AUTO_SHIFT_TAB
-#define COMBO_COUNT 5
+#define COMBO_COUNT 4
 #define TAPPING_TERM_PER_KEY
 
 #ifdef RGBLIGHT_ENABLE
