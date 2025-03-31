@@ -58,7 +58,7 @@ const struct KeycodeLayout layout = {
             QK_BOOT,    _______,    _______, _______, _______,  KC_PAST, KC_P7,  KC_P8,   KC_P9,   KC_PSLS
         },
         {
-            KC_LCTL,    KC_LALT,    KC_LGUI, KC_LSFT, _______,  KC_PPLS, KC_P4,  KC_P5,   KC_P6,   KC_PMNS
+            KC_LCTL,    KC_LSFT,    KC_LGUI, KC_LALT, _______,  KC_PPLS, KC_P4,  KC_P5,   KC_P6,   KC_PMNS
         },
         {
             LCTL(KC_Z), LCTL(KC_Y), _______, _______, _______,  KC_PDOT, KC_P1,  KC_P2,   KC_P3,   KC_PEQL

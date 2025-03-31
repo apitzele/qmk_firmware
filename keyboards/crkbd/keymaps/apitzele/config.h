@@ -20,13 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-//#define USE_MATRIX_I2C
-
-/* Select hand configuration */
-
 #define MASTER_LEFT
-// #define EE_HANDS
-//#define QUICK_TAP_TERM 0
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 
 #define NO_AUTO_SHIFT_NUMERIC

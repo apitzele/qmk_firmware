@@ -42,18 +42,15 @@
 */
 // #define MIDI_ADVANCED
 
-#define AUTO_SHIFT_TIMEOUT 175
+
 #define NO_AUTO_SHIFT_NUMERIC
 #define NO_AUTO_SHIFT_ALPHA
 #define NO_AUTO_SHIFT_TAB
-#define TAPPING_TERM 200
+#define COMBO_COUNT 4
+#define TAPPING_TERM_PER_KEY
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
-#define NO_AUTO_SHIFT_TAB
-#define NO_AUTO_SHIFT_NUMERIC
-#define NO_AUTO_SHIFT_ALPHA
 
-#define TAPPING_TERM_PER_KEY
 
 //#define COMBO_TERM 50        // how quickly all combo keys must be pressed in succession to trigger
 //#define COMBO_MUST_HOLD_MODS // if a combo triggers a modifier, only trigger when the combo is held
