@@ -1,7 +1,6 @@
 // 34 key layout w/ combos
-enum layers { _MAIN, _SYMR, _SYML, _NUM, _NAV };
-#define SYMR MO(_SYMR)
-#define SYML MO(_SYML)
+enum layers { _MAIN, _SMBL, _NUM, _NAV };
+#define SMBL MO(_SMBL)
 #define NAV MO(_NAV)
 #define NUM MO(_NUM)
 
@@ -9,8 +8,7 @@ struct KeycodeLayout {
     uint16_t dft[4][10];
     uint16_t num[4][10];
     uint16_t nav[4][10];
-    uint16_t symr[4][10];
-    uint16_t syml[4][10];
+    uint16_t smbl[4][10];
 };
  
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -50,7 +48,7 @@ const struct KeycodeLayout layout = {
             TD(T_Z),      TD(T_X),      TD(T_C),      TD(T_D),           TD(T_V),         KC_K,            TD(T_H),        KC_COMM,      KC_DOT,       TD(T_SLASH)
         },
         {
-                                                      LT(SYMR, KC_BSPC), LT(NUM, KC_SPC), LT(NAV, KC_ENT), LT(SYML, KC_DEL)
+                                                      LT(SMBL, KC_BSPC), LT(NUM, KC_SPC), LT(NAV, KC_ENT), KC_DEL
         }
     },
     { // Num
@@ -61,10 +59,10 @@ const struct KeycodeLayout layout = {
             KC_LCTL,    KC_LSFT,    KC_LGUI, KC_LALT, _______,  KC_PPLS, KC_P4,  KC_P5,   KC_P6,   KC_PMNS
         },
         {
-            LCTL(KC_Z), LCTL(KC_Y), _______, _______, _______,  KC_PDOT, KC_P1,  KC_P2,   KC_P3,   KC_PEQL
+            LCTL(KC_Z), LCTL(KC_Y), _______, _______, _______,  KC_EQL, KC_P1,  KC_P2,   KC_P3,   KC_PDOT
         },
         {
-                                             _______,  _______, KC_P0, _______
+                                             _______,  _______, KC_ENT, KC_P0  
         }
     },
     { // Nav
@@ -81,9 +79,9 @@ const struct KeycodeLayout layout = {
                                        _______, _______, _______, _______
         }
     },
-    { // Symbols Right
+    { // Symbols
         {
-            _______, _______, _______, _______, _______, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN
+            _______, _______, _______, _______, _______, KC_CIRC, KC_AMPR,    KC_UNDS,    KC_LPRN,    KC_RPRN
         },
         {
             KC_LCTL, KC_LSFT, KC_LGUI, KC_LALT, _______, KC_PIPE, KC_LCBR,    KC_RCBR,    TD(T_QUOT), KC_DQT
@@ -93,20 +91,6 @@ const struct KeycodeLayout layout = {
         },
         {
                                        _______, KC_SPC,  KC_ENT, KC_DEL
-        }
-    },
-    { // Symbols Left
-        {
-            KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, _______, _______, _______, _______
-        },
-        {
-            KC_EQL,  KC_PLUS, KC_MINS, KC_UNDS, _______, _______, KC_LALT, KC_RGUI, KC_RSFT, KC_RCTL
-        },
-        {
-            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-        },
-        {
-                                       KC_BSPC, KC_SPC,  _______, _______
         }
     }
 };

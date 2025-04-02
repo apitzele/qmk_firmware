@@ -27,13 +27,10 @@ bool oled_task_user(void) {
             oled_write_ln_P(PSTR("NUM"), false);
             break;
         case _NAV:
-            oled_write_ln_P(PSTR("NAV"), false);
+            oled_write_ln_P(PSTR("NV/FN"), false);
             break;
-        case _SYML:
-            oled_write_ln_P(PSTR("SYM L"), false);
-            break;
-        case _SYMR:
-            oled_write_ln_P(PSTR("SYM R"), false);
+        case _SMBL:
+            oled_write_ln_P(PSTR("SYMBL"), false);
             break;
         default:
             oled_write_ln_P(PSTR("?"), false);

@@ -24,16 +24,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     layout.nav[2][0], layout.nav[2][1], layout.nav[2][2], layout.nav[2][3], layout.nav[2][4], _______, _______, layout.nav[2][5], layout.nav[2][6], layout.nav[2][7], layout.nav[2][8], layout.nav[2][9],
     _______,           _______,         _______,          layout.nav[3][0], layout.nav[3][1], _______, _______, layout.nav[3][2], layout.nav[3][3], _______,          _______,          _______
   ),
-  [_SYMR] = LAYOUT_planck_grid(
-    layout.symr[0][0], layout.symr[0][1], layout.symr[0][2], layout.symr[0][3], layout.symr[0][4], _______, _______, layout.symr[0][5], layout.symr[0][6], layout.symr[0][7], layout.symr[0][8], layout.symr[0][9],
-    layout.symr[1][0], layout.symr[1][1], layout.symr[1][2], layout.symr[1][3], layout.symr[1][4], _______, _______, layout.symr[1][5], layout.symr[1][6], layout.symr[1][7], layout.symr[1][8], layout.symr[1][9],
-    layout.symr[2][0], layout.symr[2][1], layout.symr[2][2], layout.symr[2][3], layout.symr[2][4], _______, _______, layout.symr[2][5], layout.symr[2][6], layout.symr[2][7], layout.symr[2][8], layout.symr[2][9],
-    _______,           _______,           _______,           layout.symr[3][0], layout.symr[3][1], _______, _______, layout.symr[3][2], layout.symr[3][3], _______,           _______,           _______
-  ),
-  [_SYML] = LAYOUT_planck_grid(
-    layout.syml[0][0], layout.syml[0][1], layout.syml[0][2], layout.syml[0][3], layout.syml[0][4], _______, _______, layout.syml[0][5], layout.syml[0][6], layout.syml[0][7], layout.syml[0][8], layout.syml[0][9],
-    layout.syml[1][0], layout.syml[1][1], layout.syml[1][2], layout.syml[1][3], layout.syml[1][4], _______, _______, layout.syml[1][5], layout.syml[1][6], layout.syml[1][7], layout.syml[1][8], layout.syml[1][9],
-    layout.syml[2][0], layout.syml[2][1], layout.syml[2][2], layout.syml[2][3], layout.syml[2][4], _______, _______, layout.syml[2][5], layout.syml[2][6], layout.syml[2][7], layout.syml[2][8], layout.syml[2][9],
-    _______,           _______,           _______,           layout.syml[3][0], layout.syml[3][1], _______, _______, layout.syml[3][2], layout.syml[3][3], _______,           _______,           _______
+  [_SMBL] = LAYOUT_planck_grid(
+    layout.smbl[0][0], layout.smbl[0][1], layout.smbl[0][2], layout.smbl[0][3], layout.smbl[0][4], _______, _______, layout.smbl[0][5], layout.smbl[0][6], layout.smbl[0][7], layout.smbl[0][8], layout.smbl[0][9],
+    layout.smbl[1][0], layout.smbl[1][1], layout.smbl[1][2], layout.smbl[1][3], layout.smbl[1][4], _______, _______, layout.smbl[1][5], layout.smbl[1][6], layout.smbl[1][7], layout.smbl[1][8], layout.smbl[1][9],
+    layout.smbl[2][0], layout.smbl[2][1], layout.smbl[2][2], layout.smbl[2][3], layout.smbl[2][4], _______, _______, layout.smbl[2][5], layout.smbl[2][6], layout.smbl[2][7], layout.smbl[2][8], layout.smbl[2][9],
+    _______,           _______,           _______,           layout.smbl[3][0], layout.smbl[3][1], _______, _______, layout.smbl[3][2], layout.smbl[3][3], _______,           _______,           _______
   )
 };
