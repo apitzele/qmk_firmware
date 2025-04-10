@@ -81,7 +81,7 @@ const struct KeycodeLayout layout = {
     },
     { // Symbols
         {
-            KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_UNDS,    KC_LPRN,    KC_RPRN
+            KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN
         },
         {
             KC_EQL,  KC_PPLS, KC_MINUS, KC_UNDS, XXXXXXX, KC_PIPE, KC_LCBR,    KC_RCBR,    TD(T_QUOT), KC_DQT
