@@ -97,7 +97,7 @@ const struct KeycodeLayout layout = {
 
 const uint16_t PROGMEM combCaps[] = { MT(MOD_LSFT, KC_R), MT(MOD_RSFT, KC_I), COMBO_END};
 const uint16_t PROGMEM combCAD[] = { TD(T_Q), KC_SCLN, COMBO_END};
-const uint16_t PROGMEM combTab[] = { MT(MOD_LALT, KC_T), MT(MOD_LALT, KC_N), COMBO_END};
+const uint16_t PROGMEM combTab[] = { MT(MOD_LALT, KC_T), MT(MOD_RALT, KC_N), COMBO_END};
 const uint16_t PROGMEM combSTab[] = { MT(MOD_LCTL, KC_S), MT(MOD_RCTL, KC_E), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
