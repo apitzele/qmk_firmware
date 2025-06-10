@@ -70,7 +70,7 @@ const struct KeycodeLayout layout = {
             KC_NUM,  KC_SCRL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME, KC_PGUP, KC_PGDN, KC_END
         },
         {
-            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F8,   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT
+            KC_LGUI, KC_LSFT, KC_LCTL, KC_LALT, XXXXXXX, KC_F8,   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT
         },
         {
             KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F6,   KC_F5,   KC_F10,  KC_F11,  KC_F12,  RGUI(KC_F12)
