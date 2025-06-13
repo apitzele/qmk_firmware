@@ -53,16 +53,16 @@ const struct KeycodeLayout layout = {
     },
     { // Num
         {
-            QK_BOOT,    XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, KC_P7,  KC_P8,   KC_P9,   XXXXXXX
+            QK_BOOT,    XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, KC_P7,  KC_P8,   KC_P9,   XXXXXXX
         },
         {
-            XXXXXXX,    XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, KC_P4,  KC_P5,   KC_P6,   XXXXXXX
+            XXXXXXX,    XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, KC_P4,  KC_P5,   KC_P6,   XXXXXXX
         },
         {
-            LCTL(KC_Z), LCTL(KC_Y), XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  KC_P1,  KC_P2,   KC_P3,  XXXXXXX
+            LGUI(KC_Z), LGUI(LSFT(KC_Z)), XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  KC_P1,  KC_P2,   KC_P3,  XXXXXXX
         },
         {
-                                             XXXXXXX,  XXXXXXX, KC_P0, KC_PDOT  
+                                                   XXXXXXX,  XXXXXXX, KC_P0, KC_PDOT  
         }
     },
     { // Nav / FN
